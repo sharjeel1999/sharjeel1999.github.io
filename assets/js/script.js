@@ -63,11 +63,17 @@ const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
 
+console.log("--------- data select items")
+console.log(selectItems)
+
 // add event in all select items
 for (let i = 0; i < selectItems.length; i++) {
   selectItems[i].addEventListener("click", function () {
 
     let selectedValue = this.innerText.toLowerCase();
+    console.log("--------- Selected values")
+    console.log(selectedValue)
+
     selectValue.innerText = this.innerText;
     elementToggleFunc(select);
     filterFunc(selectedValue);
@@ -78,14 +84,20 @@ for (let i = 0; i < selectItems.length; i++) {
 // filter variables
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
+console.log("--------- filter items")
+console.log(filterItems)
+
 const filterFunc = function (selectedValue) {
 
   for (let i = 0; i < filterItems.length; i++) {
+    console.log("--------- loop items")
+    console.log(i, selectedValue)
+    console.log(i, filterItems[i].dataset.category)
+    console.log(i, filterItems[i])
 
-    if (selectedValue === "all") {
+    if (selectedValue === filterItems[i].dataset.category.toLowerCase()) {
       filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
+      console.log("--------- entered active")
     } else {
       filterItems[i].classList.remove("active");
     }
@@ -139,6 +151,9 @@ for (let i = 0; i < formInputs.length; i++) {
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
+
+console.log("--------- all nav links")
+console.log(navigationLinks)
 
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
