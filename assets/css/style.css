@@ -933,16 +933,19 @@ main {
 .select-item button:hover { --eerie-black-2: hsl(240, 2%, 20%); }
 
 .project-list {
-  display: grid;
+  display: inline-flex;
   grid-template-columns: 1fr;
   gap: 30px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .project-item { display: none; }
 
 .project-item.active {
   display: block;
+  box-sizing: border-box;
+  width: 100%;
   animation: scaleUp 0.25s ease forwards;
 }
 
@@ -1744,7 +1747,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    * PORTFOLIO
    */
 
-  .project-list { grid-template-columns: repeat(3, 1fr); }
+  .project-list { grid-template-columns: repeat(1, 1fr); }
 
 
 
