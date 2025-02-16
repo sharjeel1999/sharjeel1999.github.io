@@ -63,16 +63,12 @@ const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
 
-console.log("--------- data select items")
-console.log(selectItems)
 
 // add event in all select items
 for (let i = 0; i < selectItems.length; i++) {
   selectItems[i].addEventListener("click", function () {
 
     let selectedValue = this.innerText.toLowerCase();
-    console.log("--------- Selected values")
-    console.log(selectedValue)
 
     selectValue.innerText = this.innerText;
     elementToggleFunc(select);
@@ -84,20 +80,12 @@ for (let i = 0; i < selectItems.length; i++) {
 // filter variables
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
-console.log("--------- filter items")
-console.log(filterItems)
-
 const filterFunc = function (selectedValue) {
 
   for (let i = 0; i < filterItems.length; i++) {
-    console.log("--------- loop items")
-    console.log(i, selectedValue)
-    console.log(i, filterItems[i].dataset.category)
-    console.log(i, filterItems[i])
 
     if (selectedValue === filterItems[i].dataset.category.toLowerCase()) {
       filterItems[i].classList.add("active");
-      console.log("--------- entered active")
     } else {
       filterItems[i].classList.remove("active");
     }
@@ -145,6 +133,59 @@ for (let i = 0; i < formInputs.length; i++) {
 
   });
 }
+
+
+// Event listener for form submission
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  if (validateForm()) {
+    // Get form data
+    const formData = new FormData(form);
+
+    // Here you would typically send the form data to a server
+    // using fetch or XMLHttpRequest.  Since this is client-side,
+    // I'll simulate a successful submission and provide some
+    // examples of how you might handle the submission.
+
+    // Example 1: Simulate successful submission and reset the form
+    console.log("Form submitted successfully!", formData); // Log data to console
+
+    form.reset(); // Clear the form
+    formBtn.disabled = true; // Disable the button again
+    alert("Message sent successfully!"); // Or a nicer success message
+
+    // Example 2: Sending data using fetch (replace with your actual endpoint)
+    
+    fetch('https://formspree.io/f/myzknqql', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log("Form submitted successfully!");
+        form.reset();
+        formBtn.disabled = true;
+        alert("Message sent successfully!");
+      } else {
+        console.error("Error submitting form:", response.status);
+        alert("An error occurred. Please try again later.");
+      }
+    })
+    .catch(error => {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again later.");
+    });
+    
+
+  } else {
+      alert("Please fill in all required fields."); // Or better error handling
+  }
+});
+
+
+
+
 
 
 

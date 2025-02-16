@@ -933,7 +933,8 @@ main {
 .select-item button:hover { --eerie-black-2: hsl(240, 2%, 20%); }
 
 .project-list {
-  display: inline-flex;
+  display: grid;
+/*  inline-flex;*/
   grid-template-columns: 1fr;
   gap: 30px;
   margin-bottom: 10px;
