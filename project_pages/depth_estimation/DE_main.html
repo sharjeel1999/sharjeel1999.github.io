@@ -15,7 +15,7 @@
   <!--
     - css link
   -->
-  <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+  <link rel="stylesheet" href="DE_style.css">
 
   <!--
     - google font link
@@ -27,17 +27,23 @@
 
 <body>
   <header>
-    <h1>Monocular Depth Estimation for road scene images</h1>
+    <h1 class="h1">Monocular Depth Estimation for road scene images</h1>
   </header>
   <main>
-    <section>
-      <h2>Introduction</h2>
-      <p> .... Discuss normal depth estimation ....</p>
+    <section class="info-data">
+      <h2 class="h2">Introduction</h2>
+      <p class="text">
+        Estimating depth using images from two cameras that are a fixed distance appart is a technique known as stereo vision or stereo depth estimation.
+        It mimics how human eyes perceive depth by using the slight difference (disparity) between two images captured from slightly different viewpoints. 
+        The process involves capturing images, rectifying them to align corresponding points, matching features between the images, and computing disparity. 
+        Depth is then derived using the formula $$Z = \frac{f⋅B}{d}$$, where Z is depth, f is focal length, B is baseline distance, and d is disparity.
+        The result is a depth map, where each pixel represents the distance to objects in the scene.
+        </p>
     </section>
 
-    <section>
-        <h2>Monocular depth estimation</h2>
-        <p> Monocular depth estimation is the process of determining the distance and depth information of objects in a scene using a single image,
+    <section class="info-data">
+        <h2 class="h2">Monocular depth estimation</h2>
+        <p class="text"> Monocular depth estimation is the process of determining the distance and depth information of objects in a scene using a single image,
              as opposed to relying on stereo or multiple camera setups. It involves the use of advanced algorithms and deep learning techniques to infer
               the three-dimensional structure of a scene from two-dimensional images captured by a single camera.
             
