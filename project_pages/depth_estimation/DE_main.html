@@ -23,6 +23,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 </head>
 
 <body>
@@ -36,19 +41,32 @@
         Estimating depth using images from two cameras that are a fixed distance appart is a technique known as stereo vision or stereo depth estimation.
         It mimics how human eyes perceive depth by using the slight difference (disparity) between two images captured from slightly different viewpoints. 
         The process involves capturing images, rectifying them to align corresponding points, matching features between the images, and computing disparity. 
-        Depth is then derived using the formula $$Z = \frac{f⋅B}{d}$$, where Z is depth, f is focal length, B is baseline distance, and d is disparity.
+        Depth is then derived using the formula $$Z = \frac{f⋅B}{d}$$ where Z is depth, f is focal length, B is baseline distance between the cameras, and d is disparity.
         The result is a depth map, where each pixel represents the distance to objects in the scene.
+        Monocular depth estimation is the process of determining the distance and depth information of objects in a scene using a single image,
+        as opposed to relying on stereo or multiple camera setups. It involves the use of advanced algorithms and deep learning techniques to infer
+        the three-dimensional structure of a scene from two-dimensional images captured by a single camera. Despite the rapid development in deep learning techniques, estimating depth
+        using stereo vision is still more reliable for self-driving cars.
+
         </p>
     </section>
 
     <section class="info-data">
-        <h2 class="h2">Monocular depth estimation</h2>
-        <p class="text"> Monocular depth estimation is the process of determining the distance and depth information of objects in a scene using a single image,
-             as opposed to relying on stereo or multiple camera setups. It involves the use of advanced algorithms and deep learning techniques to infer
-              the three-dimensional structure of a scene from two-dimensional images captured by a single camera.
-            
-            
-            .... Discuss SIMVODIS ....</p>
+        <h2 class="h2">Basics</h2>
+        <p class="text"> 
+            This work builds upon the work done by Kim et al. in their paper <a href="https://arxiv.org/pdf/1911.05939" target="_blank" style="display: inline;">"SimVODIS: Simultaneous Visual Odometry, Object Detection, and Instance Segmentation"</a>.<br>
+
+            SimVODIS is designed to extract both geometric features (such and pose estimation and depth map prediction) and semantic featrues (such as object detection and instance segmetntaion)
+            from a sequence of image frames.
+
+            <div class="page-img">
+                <figure> 
+                    <img src="./assets/original_model.PNG" alt="Original architecture" loading="lazy">
+                    <figcaption>Original architecture</figcaption>
+                </figure>
+            </div>
+
+        </p>
     </section>
     
   </main>
