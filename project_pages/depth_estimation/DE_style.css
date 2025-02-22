@@ -215,3 +215,7 @@ body { background: var(--smoky-black); }
   text-align: center;
   color: var(--light-gray);
 }
+
+.inline-equation {
+  display: inline;
+}
