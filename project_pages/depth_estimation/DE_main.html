@@ -94,10 +94,69 @@
     </section>
 
     <section class="info-data">
-        <h2 class="h2">Experimentations</h2>
+        <h2 class="h2">Experimentations and Analysis</h2>
         <p class="text"> 
+          In our results we noticed that the following networks is good at predicting a smooth gradient of depth across the image but in certain cases it fails to account for rapid changes in depth especially around the edges of a sharp and small objects.<br>
+
+          Open source road scene segmentation datasets are much larger than depth prediction dataset, this is due to the fact that creating depth groundtruth can be a lot more time consuming and expensive. This is why we considered using labeled segmentation datasets to improve depth estimation of this network. Although SimVODIS already uses an extra segmentation branch along with the depth and pose estimation branches, training this segmentation branch along with the rest of the architecture improves the dense features learned by the encoder which can have huge positive influence on the depth prediction.<br>
+
+          We on the other hand explore a different path. We realize that the segmentation labels also contain essential information on the affinity of each pixel, i.e. if the pixel surrounding a certain pixel belong to the same category. This information can be essential when prediction sudden changes in depth mask, since the affinity information can help the model determine where a certain object ends and is there a sudden drop in depth.<br>
+
+          To integrate this affinity information into the encoder of the network we modified the original model as follows.
+        </p>
+
+          <div class="page-img">
+            <figure> 
+                <img src="./assets/distilled_model.PNG" alt="modified architecture" loading="lazy">
+                <figcaption>Modified distillation based architecture</figcaption>
+            </figure>
+          </div>
+
+        <p class="text">
+          We utilize a student-teacher distillation mechanisms for this task. Teacher encoder (shaded green) is given the affinity information of each pixel in an input image along with the input image. Images below show a set of raw feature maps from the student and the teacher architectures. This shows how the affinity input changes the intermediate features of the teacher architecture promoting much sharper and detailed edges.
+        </p>
+
+        <div class="page-img">
+          <figure> 
+            <img src="./assets/raw_features.png" alt="Raw feature comparison" loading="lazy" style="width: 1200px; height: 500px;">
+            <figcaption>Visual comparison of raw intermediate features from student and teacher encoders.</figcaption>
+          </figure>
+        </div>
+
+        <p class="text">
+          Our experiments have showns that directly distilling these raw teacher features into the student encoder can cause unstability in the training process and leads to poor performance. We have used a buffer convolutional layer between the teacher and student encoders to dampen the effects of distillation. Buffer layer contains 2 sets of convolutional layers with a kernel size of 3 and padding 1. Our experiments showed that using L2 loss for the distillation process can cause unstable training since small errors are also heavily penalized causing the network to overshoot frequently. L1 loss on the other hand does not penalize large errors enough for the model to converge.<br>
+
+          We have decided to use Huber Loss for our knowledge distillation process, it applies L2 loss for larger errors and L1 loss for smaller errors resulting in a fast and smooth convergence.<br>
+
+          Visual results below show how distilling affinity information into the student encoder has improved the prediction of depth around the corners.
 
         </p>
+
+        <div class="page-img">
+          <figure> 
+            <img src="./assets/good_results.png" alt="Raw feature comparison" loading="lazy" style="width: 1200px; height: 500px;">
+            <figcaption>Visual comparison of depth predictions.</figcaption>
+          </figure>
+        </div>
+
+        <p class="text">
+          Although our affinity distillation mechanism improves the depth prediction results for a large number of cases, it still is far from perfect. We notices certain cases where our mechanism seems to result in incorrect prediction at certain areas, especially around the edges. A few examples of such a case are shown below. 
+        </p>
+
+        <div class="page-img">
+          <figure> 
+            <img src="./assets/bad_results.png" alt="Raw feature comparison" loading="lazy" style="width: 1200px; height: 500px;">
+            <figcaption>Visual comparison of depth predictions.</figcaption>
+          </figure>
+        </div>
+
+        <p class="last-text">
+          Around certain edges, the predicted depth seems to drop drastically which is inaccurate.
+
+          Our future experiments would include using features from last 2 consecutive images to generate the depth mask for the current image, this approach has the potential to result in smoother results by reducing any inaccurate drop in depth score around the edges.
+        </p>
+
+
     </section>
     
   </main>

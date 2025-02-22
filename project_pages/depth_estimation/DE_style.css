@@ -172,7 +172,7 @@ body { background: var(--smoky-black); }
 .h4,
 .h5 {
   color: var(--white-2);
-  padding-top: 25px;
+  padding-top: 35px;
   text-transform: capitalize;
 }
 
@@ -188,9 +188,16 @@ body { background: var(--smoky-black); }
 }
 
 .text {
+  padding-top: 30px;
+  color: var(--light-gray);
+  padding-left: 20px;
+}
+
+.last-text {
   padding-top: 10px;
   color: var(--light-gray);
   padding-left: 20px;
+  padding-bottom: 80px;
 }
 
 .info-data {
