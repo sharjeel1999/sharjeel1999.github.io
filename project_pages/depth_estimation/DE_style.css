@@ -194,8 +194,8 @@ body { background: var(--smoky-black); }
 }
 
 .info-data {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .image-content {

@@ -52,19 +52,50 @@
     </section>
 
     <section class="info-data">
-        <h2 class="h2">Basics</h2>
+        <h2 class="h2">Basics problem statement</h2>
         <p class="text"> 
             This work builds upon the work done by Kim et al. in their paper <a href="https://arxiv.org/pdf/1911.05939" target="_blank" style="display: inline;">"SimVODIS: Simultaneous Visual Odometry, Object Detection, and Instance Segmentation"</a>.<br>
 
             SimVODIS is designed to extract both geometric features (such and pose estimation and depth map prediction) and semantic featrues (such as object detection and instance segmetntaion)
-            from a sequence of image frames. Instead of using image from multiple sets of cameras this approach works with a sequence onf images from the same camera <span class="inline-equation">\((I_{t-1}, T_t)\)</span>
+            from a sequence of image frames. Instead of using image from multiple sets of cameras this approach works with a sequence onf images from the same camera <span class="inline-equation">\((I_{t-1}, T_t)\)</span>. Imagine the following motion vector:
+
+            $$u_{target, source} = [t^T, r^T]^T$$
+
+            which is used to generate a certain target if source, the translation vector <span class="inline-equation">\(t = [\Delta x, \Delta y, \Delta z]^T\)</span> and the rotation vector <span class="inline-equation">\(r = [\Delta \theta, \Delta \phi, \Delta \psi]\)</span>. The main goal of the architecture is to maximize the conditional probability of the motion vector <span class="inline-equation">\(u_{target, source}\)</span> and the depth <span class="inline-equation">\(D_t\)</span>
+
+            $$\dot{u}_{t, t-1}, \dot{D}_t = argmax_{u_{t, t-1}, D_t} P(u_{t, t-1}, D_t | I_t, I_{t-1})$$
+
+
+            when the sequence of monocular images <span class="inline-equation">\((I_{t-1}, I_t)\)</span> at time step t. This conditional probability can be further expanded as follows:
+
+            $$P(u_{t, t-1}, D_t | I_t, I_{t-1}) = P(u_{t, t-1} | I_t, I_{t-1}) . P(D_t | I_t, I_{t-1})$$
+
+            $$P(u_{t, t-1}, D_t | I_t, I_{t-1}) = P(u_{t, t-1} | I_t, I_{t-1}) . P(D_t | I_t)$$
+
+            SimVODIS used 3 consecutive images when estimating motion vectors for a more robust performance, this modifies the above equation as follows:
+
+            $$\dot{U}_{t}, \dot{D}_t = argmax_{(U_{t}, D_{t})} P(U_t | I_{t+1},, I_t, I_{t-1}) . P(D_t|I_t) $$
+
+            where <span class="inline-equation">\(U_t = [u_{t,t-1} ; u_{t, t+1}]\)</span> which just means that the image at time <span class="inline-equation">\(t\)</span> will once be generated using the image at time <span class="inline-equation">\(t-1\)</span> and once using image at time <span class="inline-equation">\(t+1\)</span>. 
+
+            The simplified version of the network used to predict the depth and motion vector is shown in the image below.
 
             <div class="page-img">
                 <figure> 
                     <img src="./assets/original_model.PNG" alt="Original architecture" loading="lazy">
-                    <figcaption>Original architecture</figcaption>
+                    <figcaption>Original simplified architecture</figcaption>
                 </figure>
             </div>
+        </p>
+        <p class="text">
+            The network has a single encoder, a pose estimation branch and a depth estimation branch. The pose estimation branch. During the training process the network searches and learns optimal parameters for depth and pose estimation branches to maximize the conditional probability shown above. This training process works by minimizing the image reconstruction loss, the center image at time <span class="inline-equation">\(t\)</span> is reconstructed using images at <span class="inline-equation">\(t+1\)</span> and <span class="inline-equation">\(t-1\)</span> with the help of predicted depth and motion vectors. The more accurate depth and motion vector predictions are the closer the generated image will be to the actual image.  
+
+        </p>
+    </section>
+
+    <section class="info-data">
+        <h2 class="h2">Experimentations</h2>
+        <p class="text"> 
 
         </p>
     </section>
